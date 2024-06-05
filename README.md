@@ -69,6 +69,7 @@ python -m PyInstaller .\client_edit.py --onefile --noconsol --add-data "kayoko.p
 ## Demo
 
 ![build_result](./imgs/build.png)
+![start_spotify](./imgs/start_spotify.png)
 
 ## Features
 
