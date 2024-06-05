@@ -13,6 +13,10 @@
 
 ## Introduction
 
+<p align="center">
+    <img src="https://skillicons.dev/icons?i=pytorch,py,docker" /><br>
+</p>
+
 This repository contains a simple backdoor code example. The code is written in Python and is intended for educational purposes only. The code is not intended to be used for malicious purposes.
 
 ## Usage
