@@ -1,24 +1,9 @@
 services:
-  backdoor_client:
-    image: ubuntu:22.04
-    container_name: backdoor_client
-    volumes:
-      - ./backdoor_client:/backdoor_client
-    depends_on:
-      - backdoor_server
-    networks:
-      - backdoor_network
 
   backdoor_server:
-    image: ubuntu:22.04
+    build: ./backdoor_server
     container_name: backdoor_server
     volumes:
       - ./backdoor_server:/backdoor_server
     ports:
       - "54321:54321"
-    networks:
-      - backdoor_network
-
-networks:
-  backdoor_network:
-    driver: bridge

