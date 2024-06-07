@@ -14,6 +14,12 @@
 
 ---
 
+![share](../imgs/share.png)
+
+*將 exe 檔分享給另一台電腦*
+
+---
+
 ![result](../imgs/result_run_backdoor_exe.png)
 
 點開 exe 後， 會看到偽裝成圖片的檔案。
