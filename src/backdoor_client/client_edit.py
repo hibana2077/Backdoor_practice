@@ -12,7 +12,7 @@ import threading
 import pynput.keyboard
 
 server_ip = "localhost"
-server_port = 66666
+server_port = 54321
 file_location = os.environ["appdata"] + "\\srv.exe"
 image_file = "\\image.png"
 keylog_file = os.environ["appdata"] + "\\srv.txt"

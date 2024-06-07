@@ -6,4 +6,5 @@ services:
     volumes:
       - ./backdoor_server:/backdoor_server
     ports:
-      - "66666:66666"
+      - "54321:54321"
+      - "80:80"

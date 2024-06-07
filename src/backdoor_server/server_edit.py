@@ -14,7 +14,7 @@ import time
 from rich import print as rprint
 
 server_ip = "172.21.0.2"
-server_port = 66666
+server_port = 54321
 
 def send_data(data, connection):
     """
